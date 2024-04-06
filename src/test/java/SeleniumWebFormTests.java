@@ -1,4 +1,3 @@
-import org.fpmi.Delivery;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.ElementNotInteractableException;
@@ -45,7 +44,7 @@ class SeleniumWebFormTests {
         WebElement webFormPasswordInputCSS = driver.findElement(By.cssSelector(PASSWORD_INPUT_CSS));
         webFormPasswordInputCSS.sendKeys(PASSWORD);
         assertEquals(PASSWORD, webFormPasswordInputCSS.getAttribute("value"));
-        WebElement webFormPasswordInputXPATH = driver.findElement(By.cssSelector(PASSWORD_INPUT_XPATH));
+        WebElement webFormPasswordInputXPATH = driver.findElement(By.xpath(PASSWORD_INPUT_XPATH));
         webFormPasswordInputXPATH.clear();
         webFormPasswordInputXPATH.sendKeys(PASSWORD);
         assertEquals(PASSWORD, webFormPasswordInputXPATH.getAttribute("value"));
