@@ -26,3 +26,9 @@ dependencies {
 test {
     useJUnitPlatform()
 }
+
+tasks.register('selenium', Test) {
+    useJUnitPlatform(){
+        includeTags 'selenium'
+    }
+}
