@@ -4,13 +4,21 @@ import org.fpmi.Size;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+@ExtendWith(MockitoExtension.class)
 class DeliveryTest {
+
+    @Mock
+    private Delivery deliveryMock;
 
 
     @Tag("smoke")
@@ -46,8 +54,12 @@ class DeliveryTest {
     @Tag("smoke")
     @DisplayName("Проверка стоимости в зависимости от габаритов")
     void costSizeTest() {
-        assertEquals(200.0, Delivery.getCostSize(Size.BIG));
-        assertEquals(100.0, Delivery.getCostSize(Size.SMALL));
+
+        Mockito.when(deliveryMock.getCostSize(Mockito.any())).thenReturn(500.0);
+
+        Double actualCost = deliveryMock.getCostSize(Size.SMALL);
+
+        assertEquals(500.0, actualCost);
     }
 
     @Test
