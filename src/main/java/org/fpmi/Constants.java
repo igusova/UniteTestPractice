@@ -2,7 +2,7 @@ package org.fpmi;
 
 public class Constants {
     public static final String BASE_URL = "https://bonigarcia.dev/selenium-webdriver-java/web-form.html";
-
+    public static final String HOME_PAGE = "https://bonigarcia.dev/selenium-webdriver-java/";
     public static final String TEXT = "Hello!";
     public static final String READ_ONLY_TEXT = "Readonly input";
     public static final String PASSWORD = "qwerty123456";
