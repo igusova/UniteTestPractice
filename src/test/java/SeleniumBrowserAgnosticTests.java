@@ -37,7 +37,7 @@ class SeleniumBrowserAgnosticTests {
 
     @Test
     @DisplayName("Проверка скроллинга")
-    void checkInfiniteScroll() throws InterruptedException {
+    void checkInfiniteScroll() {
         WebElement infiniteScrollLink = driver.findElement(By.cssSelector("a[href*='infinite-scroll']"));
         infiniteScrollLink.click();
 
