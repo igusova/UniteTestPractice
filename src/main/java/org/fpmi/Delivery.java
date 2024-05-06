@@ -14,7 +14,7 @@ public class Delivery {
     }
 
     public static Double getCost(Delivery order) {
-       return (getCostDistance(order.distance) + getCostSize(order.size) + getCostFragile(order.fragile, order.distance)) * getCostLoad(order.load);
+       return (getCostDistance(order.distance) +  getCostFragile(order.fragile, order.distance)) * getCostLoad(order.load);
     }
     public static Double getCostDistance(Integer distance){
         if (distance >= 30) {
@@ -28,7 +28,7 @@ public class Delivery {
         }
     }
 
-    public static Double getCostSize(Size size){
+    public Double getCostSize(Size size){
         if (size.equals(Size.BIG)) {
             return 200.0;
         } else

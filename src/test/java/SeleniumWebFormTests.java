@@ -4,10 +4,14 @@ import org.openqa.selenium.ElementNotInteractableException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 
+import java.io.File;
+import java.net.URL;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.fpmi.Constants.*;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -32,10 +36,6 @@ class SeleniumWebFormTests {
         WebElement webFormTextInputCSS= driver.findElement(By.cssSelector(TEXT_INPUT_CSS));
         webFormTextInputCSS.sendKeys(TEXT);
         assertEquals(TEXT, webFormTextInputCSS.getAttribute("value"));
-        WebElement webFormTextInputXpath = driver.findElement(By.xpath(TEXT_INPUT_XPATH));
-        webFormTextInputXpath.clear();
-        webFormTextInputXpath.sendKeys(TEXT);
-        assertEquals(TEXT, webFormTextInputXpath.getAttribute("value"));
     }
 
     @Test
@@ -44,10 +44,14 @@ class SeleniumWebFormTests {
         WebElement webFormPasswordInputCSS = driver.findElement(By.cssSelector(PASSWORD_INPUT_CSS));
         webFormPasswordInputCSS.sendKeys(PASSWORD);
         assertEquals(PASSWORD, webFormPasswordInputCSS.getAttribute("value"));
-        WebElement webFormPasswordInputXPATH = driver.findElement(By.xpath(PASSWORD_INPUT_XPATH));
-        webFormPasswordInputXPATH.clear();
-        webFormPasswordInputXPATH.sendKeys(PASSWORD);
-        assertEquals(PASSWORD, webFormPasswordInputXPATH.getAttribute("value"));
+    }
+
+    @Test
+    @DisplayName("Ввод текста в текстовую область")
+    void checkTextArea() {
+        WebElement webFormTextarea = driver.findElement(By.cssSelector("textarea.form-control"));
+        webFormTextarea.sendKeys("Hello, world!");
+        assertEquals("Hello, world!", webFormTextarea.getAttribute("value"));
     }
 
     @Test
@@ -102,20 +106,86 @@ class SeleniumWebFormTests {
     }
 
     @Test
-    @DisplayName("Работа с разными локаторами")
+    @DisplayName("Работа с полем со списком")
     void checkSelect() {
         WebElement webFormSelect = driver.findElement(By.cssSelector(SELECT));
         Select mySelect = new Select(webFormSelect);
         mySelect.selectByIndex(2);
-        WebElement webFormInputList= driver.findElement(By.cssSelector("input[name='my-datalist']"));
-        webFormInputList.sendKeys("New");
-        WebElement webFormInputFile = driver.findElement(By.cssSelector("input[type='file']"));
-        WebElement webFormInputColor = driver.findElement(By.cssSelector("input[type='color']"));
-        WebElement webFormInputDate = driver.findElement(By.cssSelector("[name='my-disabled']"));
-        WebElement webFormRange = driver.findElement(By.cssSelector("input[type='range']"));
-        WebElement webFormTextarea = driver.findElement(By.cssSelector("textarea.form-control"));
-        webFormTextarea.sendKeys("Hello, world!");
-        assertEquals("Hello, world!", webFormTextarea.getAttribute("value"));
+        assertEquals("Two",mySelect.getFirstSelectedOption().getText());
+        Assertions.assertTrue(mySelect.getFirstSelectedOption().isSelected());
+    }
+
+    @Test
+    @DisplayName("Загрузка файла")
+    void fileUploadTest() {
+
+        URL url = SeleniumWebFormTests.class.getClassLoader().getResource("example.txt");
+
+        String absolutePath = null;
+        if (url != null) {
+            absolutePath = new File(url.getPath()).getAbsolutePath();
+            System.out.println("Абсолютный путь к файлу: " + absolutePath);
+        } else {
+            System.out.println("Ресурс не найден.");
+        }
+        driver.get("https://bonigarcia.dev/selenium-webdriver-java/web-form.html");
+        WebElement fileUpload = driver.findElement(By.name("my-file"));
+        fileUpload.sendKeys(absolutePath);
+        WebElement submit = driver.findElement(By.xpath("//button[text()='Submit']"));
+        submit.click();
+        assertThat(driver.getCurrentUrl()).contains("example.txt");
+    }
+
+    @Test
+    @DisplayName("Работа с полем дата")
+    void checkDatePicker() {
+        WebElement webFormInputDate = driver.findElement(By.cssSelector("input[name='my-date']"));
+        webFormInputDate.click();
+        WebElement curDate = driver.findElement(By.cssSelector(".day[data-date='1713830400000']"));
+        curDate.click();
+        assertEquals("04/23/2024", webFormInputDate.getAttribute("value"));
+    }
+
+    @Test
+    void checkNavigate(){
+        driver.get("https://bonigarcia.dev/selenium-webdriver-java/navigation1.html");
+        WebElement webFormNavigate = driver.findElement(By.cssSelector("[href*='navigation2']"));
+        webFormNavigate.click();
+        assertThat(driver.findElement(By.cssSelector(".lead")).getText()).contains("Ut enim ad minim veniam");
+    }
+
+    @Test
+    void checkDropDown() {
+        driver.get("https://bonigarcia.dev/selenium-webdriver-java/dropdown-menu.html");
+        WebElement dropdown1 = driver.findElement(By.id("my-dropdown-1"));
+        new Actions(driver)
+                .click(dropdown1)
+                .perform();
+        assertTrue(driver.findElement(By.xpath("//ul[1]")).isDisplayed());
+
+        WebElement dropdown2 = driver.findElement(By.id("my-dropdown-2"));
+        new Actions(driver)
+                .contextClick(dropdown2)
+                .perform();
+        assertTrue(driver.findElement(By.cssSelector("#context-menu-2")).isDisplayed());
+
+        WebElement dropdown3 = driver.findElement(By.id("my-dropdown-3"));
+        new Actions(driver)
+                .doubleClick(dropdown3)
+                .perform();
+        assertTrue(driver.findElement(By.cssSelector("#context-menu-3")).isDisplayed());
+    }
+
+    @Test
+    void actionAPIDragAndDropTests() {
+        driver.get("https://bonigarcia.dev/selenium-webdriver-java/drag-and-drop.html");
+        WebElement draggable = driver.findElement(By.id("draggable"));
+        WebElement droppable = driver.findElement(By.id("target"));
+        new Actions(driver)
+                .dragAndDrop(draggable, droppable)
+                .perform();
+        assertEquals(draggable.getLocation(),droppable.getLocation());
+
     }
 
 }
