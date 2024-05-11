@@ -35,6 +35,7 @@ public class MainPage extends BasePage {
         PageFactory.initElements(driver, this);
         header = new HeaderComponent(driver);
         footer = new FooterComponent(driver);
+        visit("https://bonigarcia.dev/selenium-webdriver-java/");
     }
     public FactoryLoginPage openLoginPage() {
         click(loginFormButton);

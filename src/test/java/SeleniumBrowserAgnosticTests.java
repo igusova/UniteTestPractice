@@ -1,3 +1,4 @@
+import io.qameta.allure.Feature;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -9,7 +10,9 @@ import org.openqa.selenium.html5.SessionStorage;
 import org.openqa.selenium.html5.WebStorage;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import steps.AllureSteps;
 
+import java.io.IOException;
 import java.time.Duration;
 import java.util.List;
 import java.util.Set;
@@ -18,8 +21,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.fpmi.Constants.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+@Feature("JS execute")
 class SeleniumBrowserAgnosticTests {
 
+    AllureSteps allureSteps = new AllureSteps();
     WebDriver driver;
 
     @BeforeEach
@@ -37,7 +42,7 @@ class SeleniumBrowserAgnosticTests {
 
     @Test
     @DisplayName("Проверка скроллинга")
-    void checkInfiniteScroll() {
+    void checkInfiniteScroll(){
         WebElement infiniteScrollLink = driver.findElement(By.cssSelector("a[href*='infinite-scroll']"));
         infiniteScrollLink.click();
 
@@ -55,6 +60,26 @@ class SeleniumBrowserAgnosticTests {
         wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(pLocator, initParagraphsNumber));
     }
 
+    @Test
+    @DisplayName("Check screenshot attachment")
+    void infiniteScrollTestWithAttach() throws InterruptedException, IOException {
+        driver.get("https://bonigarcia.dev/selenium-webdriver-java/infinite-scroll.html");
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+
+        By pLocator = By.tagName("p");
+        List<WebElement> paragraphs = wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(pLocator, 0));
+        int initParagraphsNumber = paragraphs.size();
+
+        WebElement lastParagraph = driver.findElement(By.xpath(String.format("//p[%d]", initParagraphsNumber)));
+        String script = "arguments[0].scrollIntoView();";
+        js.executeScript(script, lastParagraph);
+
+        wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(pLocator, initParagraphsNumber));
+        Thread.sleep(3000);
+        allureSteps.captureScreenshot(driver);
+        allureSteps.captureScreenshotSpoiler(driver);
+    }
     @Test
     void checkShadowDom() {
 
