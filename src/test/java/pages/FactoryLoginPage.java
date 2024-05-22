@@ -2,6 +2,7 @@ package pages;
 
 import components.FooterComponent;
 import components.HeaderComponent;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.CacheLookup;
@@ -48,15 +49,19 @@ public class FactoryLoginPage extends BasePage {
         footer = new FooterComponent(driver);
     }
 
+    @Step("Factory login with username and password")
     public void with(String username, String password) {
         type(loginInput, username);
         type(passwordInput, password);
         click(submitButton);
     }
+
+    @Step("Factory get success box is present")
     public boolean successBoxPresent() {
         return isDisplayed(successBox);
     }
 
+    @Step("Factory get invalid credential box is present")
     public boolean invalidCredentialsBoxPresent() {
         return isDisplayed(invalidCredentialsBox);
     }

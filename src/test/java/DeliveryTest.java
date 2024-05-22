@@ -1,3 +1,5 @@
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
 import org.fpmi.Delivery;
 import org.fpmi.Load;
 import org.fpmi.Size;
@@ -21,6 +23,8 @@ class DeliveryTest {
     private Delivery deliveryMock;
 
 
+    @Epic("Epic")
+    @Feature("Delivery")
     @Tag("smoke")
     @DisplayName("Проверка, что не хрупкий груз можно перевозить на любые расстояния")
     @ParameterizedTest
