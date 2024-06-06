@@ -21,7 +21,7 @@ public class PetController {
         RestAssured.defaultParser = Parser.JSON;
         this.requestSpecification.contentType(ContentType.JSON);
         this.requestSpecification.accept(ContentType.JSON);
-        this.requestSpecification.baseUri(config.getBaseUrl());
+        this.requestSpecification.baseUri(config.getBagBaseUrl());
         this.requestSpecification.filter(new AllureRestAssured());
     }
 
