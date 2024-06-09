@@ -7,7 +7,6 @@ import static org.hamcrest.Matchers.*;
 import static org.hamcrest.Matchers.matchesPattern;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-@Tag("API")
 public class UsersApiTests {
 
     private String USERNAME = "test_user_1";
