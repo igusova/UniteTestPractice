@@ -2,6 +2,7 @@ import io.restassured.response.Response;
 import io.restassured.response.ValidatableResponse;
 import models.User;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
@@ -13,6 +14,7 @@ import static org.hamcrest.Matchers.matchesPattern;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.startsWith;
 
+@Tag("API")
 class SimpleAPITests {
 
     @Test
