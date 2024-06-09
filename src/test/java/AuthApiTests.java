@@ -4,6 +4,7 @@ import io.qameta.allure.Story;
 import io.restassured.response.Response;
 import models.Item;
 import models.Items;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -14,6 +15,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static testdata.ApiTestData.JEANS_ITEM;
 
 @Story("Auth API")
+@Tag("API")
 class AuthApiTests {
     CartController controller = new CartController();
     TestConfig config = new TestConfig();

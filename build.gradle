@@ -40,7 +40,13 @@ test {
 }
 
 tasks.register('selenium', Test) {
-    useJUnitPlatform(){
+    useJUnitPlatform() {
         includeTags 'selenium'
+    }
+}
+
+tasks.register('smoke', Test)     {
+    useJUnitPlatform(){
+        includeTags 'API'
     }
 }

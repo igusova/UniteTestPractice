@@ -9,14 +9,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import static io.restassured.RestAssured.given;
-import static io.restassured.path.json.JsonPath.from;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static testdata.ApiTestData.DEFAULT_PET_BUILDER;
-import static testdata.ApiTestData.DEFAULT_USER;
 
 @Feature("ControllerTests")
-@Tag("api")
+@Tag("API")
 class ControllerApiTests {
     PetController petController = new PetController();
 
@@ -29,7 +27,7 @@ class ControllerApiTests {
     @Test
     @Tag("smoke")
     @DisplayName("Check add pet is returns 200 status ok")
-    void checkAddUserTest() {
+    void checkAddPetTest() {
         Response response = petController.addDefaultPet();
         assertThat(response.statusCode()).isEqualTo(200);
     }

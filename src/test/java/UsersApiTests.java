@@ -1,17 +1,19 @@
 import io.restassured.response.ValidatableResponse;
 import models.User;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.Matchers.matchesPattern;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@Tag("API")
 public class UsersApiTests {
 
     private String USERNAME = "test_user_1";
 
     @AfterEach
+    @BeforeEach
     void deleteCreatedUsers() {
         String endpoint = "https://petstore.swagger.io/v2/user/" + USERNAME;
         given().
@@ -26,6 +28,7 @@ public class UsersApiTests {
                 statusCode(200);
     }
     @Test
+    @Order(1)
     void createUser() {
         String createUserEndpoint = "https://petstore.swagger.io/v2/user";
         User user = new User(0, USERNAME, "firstName1", "lastName1", "email1@gmail.com", "qwe123", "123123123", 0);
@@ -60,6 +63,7 @@ public class UsersApiTests {
     }
 
     @Test
+    @Order(2)
     void updateUser() {
         String createUserEndpoint = "https://petstore.swagger.io/v2/user";
         String updateUserEndpoint = "https://petstore.swagger.io/v2/user/" + USERNAME;
