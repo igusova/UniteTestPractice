@@ -45,7 +45,7 @@ class SeleniumLoginPageTest {
 
     @Test
     void successfulLoginWithPOMTest() {
-        LoginPage loginPage = new LoginPage(driver);
+        LoginPage loginPage = new LoginPage();
 
         loginPage.successfullSignIn();
         assertThat(loginPage.SuccessMessageIsPresent()).isTrue();

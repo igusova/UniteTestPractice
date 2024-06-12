@@ -3,6 +3,9 @@ package pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.open;
+
 public class LoginPage {
     WebDriver driver;
 
@@ -14,15 +17,14 @@ public class LoginPage {
     By submitButton = By.xpath("//button[@type='submit']");
 
 
-    public LoginPage(WebDriver driver) {
-        this.driver = driver;
-        driver.get("https://bonigarcia.dev/selenium-webdriver-java/login-form.html");
+    public LoginPage() {
+        open("https://bonigarcia.dev/selenium-webdriver-java/login-form.html");
     }
 
     public void successfullSignIn() {
-        driver.findElement(loginInput).sendKeys(VALID_USER);
-        driver.findElement(passwordInput).sendKeys(VALID_PASSWORD);
-        driver.findElement(submitButton).click();
+        $(loginInput).sendKeys(VALID_USER);
+        $(passwordInput).sendKeys(VALID_PASSWORD);
+        $(submitButton).click();
     }
 
     public void successfullSignIn(String user, String password) {
@@ -32,6 +34,6 @@ public class LoginPage {
     }
 
     public boolean SuccessMessageIsPresent() {
-        return driver.findElement(By.id("success")).isDisplayed();
+        return $(By.id("success")).isDisplayed();
     }
 }
