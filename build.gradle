@@ -49,6 +49,6 @@ tasks.register('selenium', Test) {
 
 tasks.register('smoke', Test)     {
     useJUnitPlatform(){
-        includeTags 'API'
+        includeTags 'API', 'smoke'
     }
 }

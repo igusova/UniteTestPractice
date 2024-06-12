@@ -120,6 +120,7 @@ class SimpleAPITests {
 
     @Test
     void simpleDeleteTest() {
+        simplePostTest();
         String username = "FPMI_user_1";
         String endpoint = "https://petstore.swagger.io/v2/user/" + username;
         var response = given().
