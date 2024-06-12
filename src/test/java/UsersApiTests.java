@@ -7,9 +7,9 @@ import static org.hamcrest.Matchers.*;
 import static org.hamcrest.Matchers.matchesPattern;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class UsersApiTests {
+class UsersApiTests {
 
-    private String USERNAME = "test_user_1";
+    private final String USERNAME = "test_user_1";
 
     @AfterEach
     @BeforeEach

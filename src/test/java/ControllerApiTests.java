@@ -2,7 +2,6 @@ import controllers.PetController;
 import io.qameta.allure.Feature;
 import io.restassured.response.Response;
 import models.Pet;
-import models.User;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
